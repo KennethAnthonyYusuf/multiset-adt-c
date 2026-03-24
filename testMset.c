@@ -1,4 +1,4 @@
-// Main program for testing the Multiset ADT
+// Main program for testing and demonstrating the Multiset ADT
 
 #include <assert.h>
 #include <stdbool.h>
@@ -9,8 +9,7 @@
 #include "Mset.h"
 #include "MsetStructs.h"
 
-// These functions are deliberately not static to make testing more
-// convenient.
+void runDemo(void);
 
 void testMsetInsert(void);
 void testMsetInsertMany(void);
@@ -40,36 +39,92 @@ void testMsetCursor1(void);
 void testMsetCursor2(void);
 void testMsetCursor3(void);
 
-int main(int argc, char *argv[]) {
-	testMsetInsert();
-	testMsetInsertMany();
-	testMsetDelete();
-	testMsetDeleteMany();
-	testMsetSize();
-	testMsetTotalCount();
-	testMsetGetCount();
-	testMsetPrint();
+static void runTest(const char *name, void (*testFunc)(void)) {
+	printf("[RUN] %s\n", name);
+	testFunc();
+	printf("[PASS] %s\n\n", name);
+}
 
-	testMsetUnion();
-	testMsetIntersection();
-	testMsetIncluded();
-	testMsetEquals();
+int main(void) {
+	printf("========================================\n");
+	printf("      Multiset ADT Demo and Tests\n");
+	printf("========================================\n\n");
 
-	testBalance1();
-	testBalance2();
+	runDemo();
 
-	testMsetAtIndex();
-	testMsetIndexOf();
+	printf("Running automated tests...\n\n");
 
-	testMsetCursor1();
-	testMsetCursor2();
-	testMsetCursor3();
+	runTest("testMsetInsert", testMsetInsert);
+	runTest("testMsetInsertMany", testMsetInsertMany);
+	runTest("testMsetDelete", testMsetDelete);
+	runTest("testMsetDeleteMany", testMsetDeleteMany);
+	runTest("testMsetSize", testMsetSize);
+	runTest("testMsetTotalCount", testMsetTotalCount);
+	runTest("testMsetGetCount", testMsetGetCount);
+	runTest("testMsetPrint", testMsetPrint);
+
+	runTest("testMsetUnion", testMsetUnion);
+	runTest("testMsetIntersection", testMsetIntersection);
+	runTest("testMsetIncluded", testMsetIncluded);
+	runTest("testMsetEquals", testMsetEquals);
+
+	runTest("testBalance1", testBalance1);
+	runTest("testBalance2", testBalance2);
+
+	runTest("testMsetAtIndex", testMsetAtIndex);
+	runTest("testMsetIndexOf", testMsetIndexOf);
+
+	runTest("testMsetCursor1", testMsetCursor1);
+	runTest("testMsetCursor2", testMsetCursor2);
+	runTest("testMsetCursor3", testMsetCursor3);
+
+	printf("========================================\n");
+	printf("All tests passed successfully.\n");
+	printf("========================================\n");
+
+	return 0;
+}
+
+void runDemo(void) {
+	printf("=== Multiset Demo ===\n\n");
+
+	Mset s = MsetNew();
+
+	printf("Inserting elements...\n");
+	MsetInsert(s, 5);
+	MsetInsertMany(s, 3, 2);
+	MsetInsertMany(s, 7, 4);
+
+	printf("Multiset contents: ");
+	MsetPrint(s, stdout);
+	printf("\n\n");
+
+	printf("Count of 3: %d\n", MsetGetCount(s, 3));
+	printf("Total elements: %d\n", MsetTotalCount(s));
+	printf("Distinct elements: %d\n\n", MsetSize(s));
+
+	printf("Deleting one 7...\n");
+	MsetDelete(s, 7);
+
+	printf("Updated multiset: ");
+	MsetPrint(s, stdout);
+	printf("\n\n");
+
+	printf("Traversing with cursor:\n");
+	MsetCursor cur = MsetCursorNew(s);
+
+	while (MsetCursorNext(cur)) {
+		struct item x = MsetCursorGet(cur);
+		printf("Element %d (count %d)\n", x.elem, x.count);
+	}
+
+	MsetCursorFree(cur);
+	MsetFree(s);
+
+	printf("\n=== End of Demo ===\n\n");
 }
 
 void testMsetInsert(void) {
-	// NOTE: MsetInsert can't be tested on its own unless we directly
-	//       access the internal representation of the ADT
-
 	Mset s = MsetNew();
 
 	MsetInsert(s, 4);
@@ -87,14 +142,12 @@ void testMsetInsert(void) {
 }
 
 void testMsetInsertMany(void) {
-	// NOTE: The note in testMsetInsert also applies to MsetInsertMany
-
 	Mset s = MsetNew();
 
-	MsetInsertMany(s, 4, 2); // insert two 4's
-	MsetInsertMany(s, 7, 3); // insert three 7's
-	MsetInsertMany(s, 1, 5); // insert five 1's
-	MsetInsertMany(s, 3, 1); // insert one 3
+	MsetInsertMany(s, 4, 2);
+	MsetInsertMany(s, 7, 3);
+	MsetInsertMany(s, 1, 5);
+	MsetInsertMany(s, 3, 1);
 
 	assert(MsetSize(s) == 4);
 	assert(MsetTotalCount(s) == 11);
@@ -103,9 +156,6 @@ void testMsetInsertMany(void) {
 }
 
 void testMsetDelete(void) {
-	// NOTE: MsetDelete can't be tested without either MsetInsert or
-	//       MsetInsertMany
-
 	Mset s = MsetNew();
 
 	MsetInsert(s, 4);
@@ -249,11 +299,6 @@ void checkMsetPrint(Mset s, char *expectedPrint) {
 	fclose(out);
 }
 
-/**
- * This function checks if the contents of a file matches the expected
- * contents. If the contents do not match, the program will exit with an
- * assertion error.
- */
 void checkFileContents(FILE *file, char *expectedContents) {
 	fflush(file);
 	fseek(file, 0, SEEK_SET);
@@ -261,15 +306,12 @@ void checkFileContents(FILE *file, char *expectedContents) {
 	size_t n = 0;
 	getline(&line, &n, file);
 	if (strcmp(line, expectedContents) != 0) {
-		printf("Test failed for MsetPrint: expected \"%s\", "
-		       "saw \"%s\"\n", expectedContents, line);
-
+		printf("Test failed for MsetPrint: expected \"%s\", saw \"%s\"\n",
+		       expectedContents, line);
 		assert(strcmp(line, expectedContents) == 0);
 	}
 	free(line);
 }
-
-////////////////////////////////////////////////////////////////////////
 
 void testMsetUnion(void) {
 	Mset a = MsetNew();
@@ -378,8 +420,6 @@ void testMsetEquals(void) {
 	MsetFree(c);
 }
 
-////////////////////////////////////////////////////////////////////////
-
 void testBalance1(void) {
 	Mset s = MsetNew();
 
@@ -387,10 +427,6 @@ void testBalance1(void) {
 	MsetInsert(s, 5);
 	MsetInsert(s, 2);
 
-	// The tree should have been rebalanced after inserting 2
-	// NOTE: Normally, a user should not have access to the concrete
-	//       representation of an ADT, but since we have #included
-	//       MsetStructs.h, we have access for testing purposes.
 	assert(isHeightBalanced(s->tree));
 
 	MsetFree(s);
@@ -405,7 +441,6 @@ void testBalance2(void) {
 	MsetInsert(s, 1);
 	MsetDelete(s, 7);
 
-	// The tree should have been rebalanced after deleting 7
 	assert(isHeightBalanced(s->tree));
 
 	MsetFree(s);
@@ -433,8 +468,6 @@ bool doIsHeightBalanced(struct node *t, int *height) {
 		return false;
 	}
 }
-
-////////////////////////////////////////////////////////////////////////
 
 void testMsetAtIndex(void) {
 	Mset s = MsetNew();
@@ -494,8 +527,6 @@ void testMsetIndexOf(void) {
 	MsetFree(s);
 }
 
-////////////////////////////////////////////////////////////////////////
-
 void testMsetCursor1(void) {
 	Mset s = MsetNew();
 
@@ -508,78 +539,56 @@ void testMsetCursor1(void) {
 
 	struct item item;
 
-	// start  1  3  4  7  end
-	//   ^
 	item = MsetCursorGet(cur);
 	assert(item.elem == UNDEFINED);
 	assert(item.count == 0);
 
 	assert(MsetCursorNext(cur));
-	// start  1  3  4  7  end
-	//        ^
 	item = MsetCursorGet(cur);
 	assert(item.elem == 1);
 	assert(item.count == 5);
 
 	assert(MsetCursorNext(cur));
-	// start  1  3  4  7  end
-	//           ^
 	item = MsetCursorGet(cur);
 	assert(item.elem == 3);
 	assert(item.count == 1);
 
 	assert(MsetCursorNext(cur));
-	// start  1  3  4  7  end
-	//              ^
 	item = MsetCursorGet(cur);
 	assert(item.elem == 4);
 	assert(item.count == 2);
 
 	assert(MsetCursorNext(cur));
-	// start  1  3  4  7  end
-	//                 ^
 	item = MsetCursorGet(cur);
 	assert(item.elem == 7);
 	assert(item.count == 3);
 
 	assert(!MsetCursorNext(cur));
-	// start  1  3  4  7  end
-	//                     ^
 	item = MsetCursorGet(cur);
 	assert(item.elem == UNDEFINED);
 	assert(item.count == 0);
 
 	assert(MsetCursorPrev(cur));
-	// start  1  3  4  7  end
-	//                 ^
 	item = MsetCursorGet(cur);
 	assert(item.elem == 7);
 	assert(item.count == 3);
 
 	assert(MsetCursorPrev(cur));
-	// start  1  3  4  7  end
-	//              ^
 	item = MsetCursorGet(cur);
 	assert(item.elem == 4);
 	assert(item.count == 2);
 
 	assert(MsetCursorPrev(cur));
-	// start  1  3  4  7  end
-	//           ^
 	item = MsetCursorGet(cur);
 	assert(item.elem == 3);
 	assert(item.count == 1);
 
 	assert(MsetCursorPrev(cur));
-	// start  1  3  4  7  end
-	//        ^
 	item = MsetCursorGet(cur);
 	assert(item.elem == 1);
 	assert(item.count == 5);
 
 	assert(!MsetCursorPrev(cur));
-	// start  1  3  4  7  end
-	//   ^
 	item = MsetCursorGet(cur);
 	assert(item.elem == UNDEFINED);
 	assert(item.count == 0);
@@ -600,44 +609,30 @@ void testMsetCursor2(void) {
 
 	struct item item;
 
-	// start  1  4  6  7  end
-	//   ^
 	item = MsetCursorGet(cur);
 	assert(item.elem == UNDEFINED);
 	assert(item.count == 0);
 
 	assert(MsetCursorNext(cur));
-	// start  1  4  6  7  end
-	//        ^
 	item = MsetCursorGet(cur);
 	assert(item.elem == 1);
 	assert(item.count == 5);
 
 	MsetInsertMany(s, 2, 4);
-	// start  1  2  4  6  7  end
-	//        ^
 
 	assert(MsetCursorNext(cur));
-	// start  1  2  4  6  7  end
-	//           ^
 	item = MsetCursorGet(cur);
 	assert(item.elem == 2);
 	assert(item.count == 4);
 
 	assert(MsetCursorNext(cur));
-	// start  1  2  4  6  7  end
-	//              ^
 	item = MsetCursorGet(cur);
 	assert(item.elem == 4);
 	assert(item.count == 2);
 
 	MsetDelete(s, 6);
-	// start  1  2  4  7  end
-	//              ^
 
 	assert(MsetCursorNext(cur));
-	// start  1  2  4  7  end
-	//                 ^
 	item = MsetCursorGet(cur);
 	assert(item.elem == 7);
 	assert(item.count == 3);
@@ -658,17 +653,14 @@ void testMsetCursor3(void) {
 
 	struct item item;
 
-	// start  1  4  6  7  end
-	//   ^
 	item = MsetCursorGet(cur);
 	assert(item.elem == UNDEFINED);
 	assert(item.count == 0);
 	MsetCursorNext(cur);
-	
+
 	MsetDeleteMany(s, 1, 5);
 	assert(MsetCursorNext(cur) == false);
-	// start  1  4  6  7  end
-	//        ^
+
 	item = MsetCursorGet(cur);
 	assert(item.elem == UNDEFINED);
 	assert(item.count == 0);
@@ -676,5 +668,3 @@ void testMsetCursor3(void) {
 	MsetCursorFree(cur);
 	MsetFree(s);
 }
-////////////////////////////////////////////////////////////////////////
-
