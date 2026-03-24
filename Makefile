@@ -5,7 +5,7 @@ CFLAGS = -Wall -Wvla -Werror -gdwarf-4
 
 .PHONY: asan msan nosan
 
-asan: CFLAGS += -fsanitize=address,leak,undefined
+asan: CFLAGS += -fsanitize=address,undefined
 asan: all
 
 msan: CFLAGS += -fsanitize=memory,undefined -fsanitize-memory-track-origins
@@ -24,4 +24,3 @@ testMset: testMset.c Mset.c Mset.h MsetStructs.h
 .PHONY: clean
 clean:
 	rm -f testMset
-
