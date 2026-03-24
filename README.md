@@ -1,46 +1,34 @@
-# Multiset ADT (C)
+# 🌳 Multiset ADT (C)
 
-An implementation of a Multiset Abstract Data Type (ADT) in C using an AVL tree for efficient storage and operations.
+A low-level data structures project written in C that implements a **Multiset Abstract Data Type (ADT)** using an **AVL tree** for efficient storage, balancing, and retrieval.
+
+---
+
+## 🚀 Key Highlights
+
+- Implemented a complete **Multiset ADT in C**
+- Used a **self-balancing AVL tree** to maintain efficient operations
+- Supported both **basic multiset operations** and **advanced set-like operations**
+- Built additional functionality such as **index-based access** and **cursor traversal**
+- Demonstrates strong understanding of **data structures, memory management, and algorithmic efficiency**
 
 ---
 
 ## 📖 Overview
 
-This project implements a multiset (also known as a bag), a data structure that allows multiple occurrences of the same element. 
+This project implements a **multiset** (also called a *bag*), a data structure that stores elements along with how many times each element appears.
 
-The multiset is implemented using a **self-balancing AVL tree**, ensuring efficient operations such as insertion, deletion, and lookup in **O(log n)** time.
+Unlike a normal set, duplicate values are allowed. To keep operations efficient, the multiset is implemented using an **AVL tree**, a self-balancing binary search tree that ensures the structure remains balanced after insertions and deletions.
 
-It also includes advanced features such as union, intersection, indexing, and cursor-based traversal.
-
----
-
-## ✨ Features
-
-- Insert single or multiple elements
-- Delete single or multiple elements
-- Count occurrences of elements
-- Maintain sorted order automatically (AVL tree)
-- Efficient operations (logarithmic time complexity)
-- Union and intersection of multisets
-- Equality and inclusion checks
-- Access elements by index
-- Cursor-based traversal (next/previous)
-- Doubly linked structure for ordered iteration
-- Automatic memory management
+This allows common operations such as insertion, deletion, and lookup to run efficiently while keeping the data ordered.
 
 ---
 
 ## 🛠️ Technologies Used
 
-- **Language:** C  
-- **Concepts:**  
-  - Abstract Data Types (ADT)  
-  - AVL Trees (self-balancing BST)  
-  - Recursion  
-  - Dynamic Memory Allocation (`malloc`, `free`)  
-  - Structs and pointers  
-  - Tree rotations (left/right)  
-  - Doubly linked list (via `next` / `prev`)  
+- **Language:** C
+- **Data Structure:** AVL Tree
+- **Concepts:** ADT design, recursion, dynamic memory allocation, balancing, ordered traversal
 
 ---
 
@@ -53,7 +41,7 @@ make
 
 ---
 
-## How to Use the Multiset
+## 📦 How to Use the Multiset
 
 The multiset is a library (ADT), so you use it by calling functions in your C program.
 
@@ -82,7 +70,7 @@ The multiset is a library (ADT), so you use it by calling functions in your C pr
 |---------|-------------|---------|
 | `MsetUnion(s1, s2)` | Create union of two multisets | `Mset u = MsetUnion(s1, s2);` |
 | `MsetIntersection(s1, s2)` | Create intersection of two multisets | `Mset i = MsetIntersection(s1, s2);` |
-| `MsetIncluded(s1, s2)` | Check if s1 is subset of s2 | `MsetIncluded(s1, s2);` |
+| `MsetIncluded(s1, s2)` | Check if s1 is included in s2 | `MsetIncluded(s1, s2);` |
 | `MsetEquals(s1, s2)` | Check if two multisets are equal | `MsetEquals(s1, s2);` |
 
 ---
@@ -91,8 +79,8 @@ The multiset is a library (ADT), so you use it by calling functions in your C pr
 
 | Function | Description | Example |
 |---------|-------------|---------|
-| `MsetAtIndex(s, index)` | Get element at index | `struct item x = MsetAtIndex(s, 0);` |
-| `MsetIndexOf(s, elem)` | Get index of an element | `int i = MsetIndexOf(s, 5);` |
+| `MsetAtIndex(s, index)` | Get element at a sorted index | `struct item x = MsetAtIndex(s, 0);` |
+| `MsetIndexOf(s, elem)` | Get the sorted index of an element | `int i = MsetIndexOf(s, 5);` |
 
 ---
 
@@ -107,3 +95,41 @@ The multiset is a library (ADT), so you use it by calling functions in your C pr
 | `MsetCursorFree(cur)` | Free cursor memory | `MsetCursorFree(cur);` |
 
 ---
+
+## 🧠 Technical Insights
+
+- **AVL Tree Balancing**  
+  The multiset uses an AVL tree, which keeps the structure balanced after insertions and deletions to support efficient operations.
+
+- **Efficient Counting**  
+  Each node stores both the element and its count, allowing duplicates to be handled cleanly without storing repeated nodes.
+
+- **Memory Management in C**  
+  The project uses manual dynamic memory allocation and cleanup, which demonstrates understanding of low-level resource management.
+
+- **Ordered Traversal**  
+  Since the multiset is stored in a balanced binary search tree, elements can be accessed in sorted order.
+
+- **Extended Functionality**  
+  Beyond basic insert/delete operations, the implementation also supports unions, intersections, cursor traversal, and index-based access.
+
+---
+
+## 💡 Why This Project Matters
+
+This project demonstrates the ability to:
+
+- implement a non-trivial abstract data type from scratch
+- apply tree balancing algorithms to maintain efficiency
+- manage memory safely in a low-level language
+- design modular and reusable data structure code
+- reason about algorithmic performance and ordered data access
+
+It reflects strong foundations in **data structures, algorithms, and systems-level programming**, which are valuable in software engineering and backend development.
+
+---
+
+## 🚀 Author
+
+**Kenneth Anthony Yusuf**  
+Computer Science Student @ UNSW
