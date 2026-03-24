@@ -1,10 +1,27 @@
 CC = clang
 CFLAGS = -Wall -Wvla -Werror -gdwarf-4
 
-.PHONY: all clean
+########################################################################
 
-all:
-	$(CC) $(CFLAGS) -c Mset.c
+.PHONY: asan msan nosan
 
+asan: CFLAGS += -fsanitize=address,leak,undefined
+asan: all
+
+msan: CFLAGS += -fsanitize=memory,undefined -fsanitize-memory-track-origins
+msan: all
+
+nosan: all
+
+########################################################################
+
+.PHONY: all
+all: testMset
+
+testMset: testMset.c Mset.c Mset.h MsetStructs.h
+	$(CC) $(CFLAGS) -o testMset testMset.c Mset.c
+
+.PHONY: clean
 clean:
-	rm -f *.o
+	rm -f testMset
+
