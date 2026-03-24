@@ -48,7 +48,7 @@ It also includes advanced features such as union, intersection, indexing, and cu
 
 ```bash
 make
-./mset
+./testMset
 ```
 
 ---
