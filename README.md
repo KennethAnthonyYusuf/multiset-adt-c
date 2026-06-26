@@ -36,6 +36,11 @@ This allows common operations such as insertion, deletion, and lookup to run eff
 
 ```bash
 make
+```
+
+## How to Run
+
+```bash
 ./testMset
 ```
 
