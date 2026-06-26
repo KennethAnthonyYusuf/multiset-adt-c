@@ -1,10 +1,10 @@
-# 🌳 Multiset ADT (C)
+# Multiset ADT (C)
 
 A low-level data structures project written in C that implements a **Multiset Abstract Data Type (ADT)** using an **AVL tree** for efficient storage, balancing, and retrieval.
 
 ---
 
-## 🚀 Key Highlights
+## Key Highlights
 
 - Implemented a complete **Multiset ADT in C**
 - Used a **self-balancing AVL tree** to maintain efficient operations
@@ -14,7 +14,7 @@ A low-level data structures project written in C that implements a **Multiset Ab
 
 ---
 
-## 📖 Overview
+## Overview
 
 This project implements a **multiset** (also called a *bag*), a data structure that stores elements along with how many times each element appears.
 
@@ -24,7 +24,7 @@ This allows common operations such as insertion, deletion, and lookup to run eff
 
 ---
 
-## 🛠️ Technologies Used
+## Technologies Used
 
 - **Language:** C
 - **Data Structure:** AVL Tree
@@ -32,7 +32,7 @@ This allows common operations such as insertion, deletion, and lookup to run eff
 
 ---
 
-## ▶️ How to Compile
+## How to Compile
 
 ```bash
 make
@@ -41,13 +41,13 @@ make
 
 ---
 
-## 📦 How to Use the Multiset
+## How to Use the Multiset
 
 The multiset is a library (ADT), so you use it by calling functions in your C program.
 
 ---
 
-### 🔹 Basic Operations
+### Basic Operations
 
 | Function | Description | Example |
 |---------|-------------|---------|
@@ -64,7 +64,7 @@ The multiset is a library (ADT), so you use it by calling functions in your C pr
 
 ---
 
-### 🔹 Advanced Operations
+### Advanced Operations
 
 | Function | Description | Example |
 |---------|-------------|---------|
@@ -75,7 +75,7 @@ The multiset is a library (ADT), so you use it by calling functions in your C pr
 
 ---
 
-### 🔹 Index Operations
+### Index Operations
 
 | Function | Description | Example |
 |---------|-------------|---------|
@@ -84,7 +84,7 @@ The multiset is a library (ADT), so you use it by calling functions in your C pr
 
 ---
 
-### 🔹 Cursor Operations
+### Cursor Operations
 
 | Function | Description | Example |
 |---------|-------------|---------|
@@ -96,7 +96,7 @@ The multiset is a library (ADT), so you use it by calling functions in your C pr
 
 ---
 
-## 🧠 Technical Insights
+## Technical Insights
 
 - **AVL Tree Balancing**  
   The multiset uses an AVL tree, which keeps the structure balanced after insertions and deletions to support efficient operations.
@@ -115,7 +115,7 @@ The multiset is a library (ADT), so you use it by calling functions in your C pr
 
 ---
 
-## 💡 Why This Project Matters
+## Why This Project Matters
 
 This project demonstrates the ability to:
 
@@ -125,11 +125,8 @@ This project demonstrates the ability to:
 - design modular and reusable data structure code
 - reason about algorithmic performance and ordered data access
 
-It reflects strong foundations in **data structures, algorithms, and systems-level programming**, which are valuable in software engineering and backend development.
-
 ---
 
-## 🚀 Author
+## Author
 
-**Kenneth Anthony Yusuf**  
-Computer Science Student @ UNSW
+**Kenneth Anthony Yusuf**
