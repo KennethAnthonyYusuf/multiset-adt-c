@@ -32,13 +32,22 @@ This allows common operations such as insertion, deletion, and lookup to run eff
 
 ---
 
-## How to Compile
+## How to Run
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/KennethAnthonyYusuf/multiset-adt-c.git
+cd multiset-adt-c
+```
+
+2. Compile the program:
 
 ```bash
 make
 ```
 
-## How to Run
+3. Run the program:
 
 ```bash
 ./testMset
